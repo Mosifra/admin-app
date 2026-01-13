@@ -1,6 +1,7 @@
 import { LocationProvider, Router, Route } from "preact-iso"
 import AdminPanel from "./pages/AdminPanel"
 import CreateUniversity from "./pages/CreateUniversity"
+import CreateCompany from "./pages/CreateCompany"
 
 export function App() {
   return (
@@ -8,7 +9,8 @@ export function App() {
       <main class="container">
         <Router>
           <Route path="/" component={AdminPanel} />
-          <Route path="/create_university" component={CreateUniversity} />
+          <Route path="/create/university" component={CreateUniversity} />
+          <Route path="/create/company" component={CreateCompany} />
         </Router>
       </main>
     </LocationProvider>

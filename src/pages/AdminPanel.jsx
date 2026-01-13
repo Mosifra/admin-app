@@ -1,11 +1,14 @@
 import { useLocation } from "preact-iso"
-import { Building2 } from "lucide-preact"
+import { Building2, Building } from "lucide-preact"
 
 export default function AdminPanel() {
   const location = useLocation()
 
   const goToCreateUniversity = () => {
-    location.route("/create_university")
+    location.route("/create/university")
+  }
+  const goToCreateCompany = () => {
+    location.route("/create/company")
   }
 
   return (
@@ -27,6 +30,23 @@ export default function AdminPanel() {
 
             <button
               onClick={goToCreateUniversity}
+              className="w-full px-6 py-3 bg-vert-mosifra text-white rounded-lg font-semibold hover:opacity-90 transition-all duration-300"
+            >
+              Accéder
+            </button>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-md p-8 border-l-4 border-vert-mosifra hover:shadow-lg transition-all duration-300">
+            <div className="mb-6">
+              <div className="w-12 h-12 bg-vert-mosifra rounded-lg flex items-center justify-center mb-4 text-white">
+                <Building />
+              </div>
+              <h2 className="text-2xl font-bold text-vert-mosifra mb-2">Créer une entreprise</h2>
+              <p className="text-gray-600">Créer un compte entreprise</p>
+            </div>
+
+            <button
+              onClick={goToCreateCompany}
               className="w-full px-6 py-3 bg-vert-mosifra text-white rounded-lg font-semibold hover:opacity-90 transition-all duration-300"
             >
               Accéder
