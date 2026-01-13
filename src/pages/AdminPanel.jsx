@@ -15,6 +15,7 @@ export default function AdminPanel() {
     <main className="min-h-screen min-w-screen bg-beige-mosifra">
       <div className="max-w-6xl mx-auto px-4 py-16">
         <h1 className="text-5xl font-bold text-vert-mosifra mb-12">Mosifra -  Panel d'administration</h1>
+        <h2 className="text-3xl font-bold text-vert-mosifra mb-12">Créer un compte</h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-white rounded-xl shadow-md p-8 border-l-4 border-vert-mosifra hover:shadow-lg transition-all duration-300">
