@@ -11,20 +11,6 @@ export default function CreateUniversity() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const headers = new Headers();
-    /* jwt + headers */
-    const options = {
-      method: "POST",
-      headers: headers,
-      redirect: "follow"
-    };
-    try {
-
-      const response = await fetch("urlàremplir", options);
-      const data = await response.json();
-    } catch (error) {
-      console.log(error);
-    }
     location.route("/admin")
   }
 
