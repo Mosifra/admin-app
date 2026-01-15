@@ -1,5 +1,6 @@
 mod api;
 mod commands;
+mod jwt;
 
 use crate::commands::{create_company, create_university};
 
