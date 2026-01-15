@@ -1,10 +1,8 @@
 {
   description = "Tauri devenv";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
   };
-
   outputs = {
     self,
     nixpkgs,
@@ -25,7 +23,6 @@
         clippy
         rust-analyzer
       ];
-
       buildInputs = with pkgs; [
         at-spi2-atk
         xdg-utils
@@ -40,10 +37,14 @@
         pango
         webkitgtk_4_1
         openssl
+        glib-networking
       ];
       shellHook = ''
         export PATH=$PATH:/run/current-system/sw/bin
-        # Crée un lien temporaire vers /usr/bin/xdg-open
+
+        export GIO_MODULE_DIR="${pkgs.glib-networking}/lib/gio/modules"
+        export WEBKIT_DISABLE_COMPOSITING_MODE=1
+
         mkdir -p $HOME/.local/bin
         ln -sf $(which xdg-open) $HOME/.local/bin/xdg-open
         export PATH=$HOME/.local/bin:$PATH
