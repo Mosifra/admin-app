@@ -1,41 +1,35 @@
-import { invoke } from '@tauri-apps/api/core';
+import { invoke } from "@tauri-apps/api/core"
 import { useState } from "preact/hooks"
 import { useLocation } from "preact-iso"
-import { useEffect } from "preact/hooks"
 
-export default function CreateUniversity() {
+export default function CreateCompany() {
   const location = useLocation()
-
   const [login, setLogin] = useState("")
   const [mail, setMail] = useState("")
   const [name, setName] = useState("")
-
-  useEffect(() => {
-    const jwt = sessionStorage.getItem("jwt")
-
-    if (!jwt) {
-      location.route("/login")
-    }
-  }, [])
+  const [generatedPassword, setGeneratedPassword] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    try {
-      await (
-        invoke('create_university', { login: login, mail: mail, name: name })
-      )
-    } catch (err) {
-      console.log(err)
-    }
-    location.route("/")
+
+    await invoke("create_company", {
+      login,
+      mail,
+      name,
+    }).then((password) => setGeneratedPassword(password))
+
+    location.route("/success", {
+      state: {
+        password: generatedPassword,
+        redirect: "/companies",
+      },
+    })
   }
 
   return (
     <main className="min-h-screen min-w-screen bg-beige-mosifra">
       <div className="max-w-3xl mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold text-vert-mosifra mb-10">
-          Création d’une université
-        </h1>
+        <h1 className="text-4xl font-bold text-vert-mosifra mb-10">Ajouter un compte entreprise</h1>
 
         <form
           onSubmit={handleSubmit}
@@ -69,7 +63,7 @@ export default function CreateUniversity() {
 
           <div>
             <label className="block text-sm font-semibold text-vert-mosifra mb-2">
-              Nom de l’université
+              Nom de l’entreprise
             </label>
             <input
               type="text"
@@ -83,7 +77,7 @@ export default function CreateUniversity() {
           <div className="pt-4 flex justify-end gap-4">
             <button
               type="button"
-              onClick={() => location.route("/")}
+              onClick={() => location.route("/companies")}
               className="px-6 py-3 rounded-lg border font-semibold text-gray-600 hover:bg-gray-100 transition"
             >
               Annuler
@@ -92,9 +86,7 @@ export default function CreateUniversity() {
             <button
               type="submit"
               className="px-6 py-3 bg-vert-mosifra text-white rounded-lg font-semibold hover:opacity-90 transition"
-            >
-              Créer
-            </button>
+            >Valider</button>
           </div>
         </form>
       </div>
