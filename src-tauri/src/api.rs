@@ -40,7 +40,7 @@ pub async fn create_company_request(
     body.insert("mail", mail);
     body.insert("name", name);
     let mut url = get_base_url().await.unwrap();
-    url.push_str("/create/companies");
+    url.push_str("/create/company");
     let client = reqwest::Client::new();
     let body = client
         .post(url)
@@ -74,7 +74,7 @@ pub async fn fetch_companies_request(
     jwt: String,
 ) -> Result<FetchCompaniesResponse, reqwest::Error> {
     let mut url = get_base_url().await.unwrap();
-    url.push_str("/user/company");
+    url.push_str("/user/companies");
     let client = reqwest::Client::new();
     let body = client
         .get(url)
