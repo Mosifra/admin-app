@@ -35,3 +35,13 @@ pub struct Company {
     pub mail: String,
     pub name: String,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct DeleteUniversityResponse {
+    pub success: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct DeleteCompanyResponse {
+    pub success: bool,
+}

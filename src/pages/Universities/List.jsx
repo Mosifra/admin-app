@@ -16,6 +16,16 @@ export default function UniversityList() {
     fetchUniversities()
   }, [])
 
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    try {
+      await invoke("delete_university", { jwt: jwt, id: id })
+      setUniversities((prev) => prev.filter((u) => u.id !== id))
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   return (
     <main className="min-h-screen min-w-screen bg-beige-mosifra">
       <div className="max-w-6xl mx-auto px-4 py-16">
@@ -57,6 +67,7 @@ export default function UniversityList() {
                   <td className="p-4">{u.mail}</td>
                   <td className="p-4 text-right">
                     <button
+                      onClick={(e) => handleDelete(e, u.id)}
                       className="text-red-600 rounded-xl p-2 font-semibold hover:bg-red-600 hover:text-white transition-all"
                     >Supprimer</button>
                   </td>

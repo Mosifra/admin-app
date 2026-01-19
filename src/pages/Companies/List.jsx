@@ -15,6 +15,15 @@ export default function CompaniesList() {
     fetchCompanies()
   }, [])
 
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    try {
+      await invoke("delete_company", { jwt: jwt, id: id })
+      setCompanies((prev) => prev.filter((u) => u.id !== id))
+    } catch (e) {
+      console.error(e)
+    }
+  }
   return (
     <main className="min-h-screen min-w-screen bg-beige-mosifra">
       <div className="max-w-6xl mx-auto px-4 py-16">
@@ -54,6 +63,7 @@ export default function CompaniesList() {
                   <td className="p-4">{u.mail}</td>
                   <td className="p-4 text-right">
                     <button
+                      onClick={(e) => handleDelete(e, u.id)}
                       className="text-red-600 rounded-lg p-2 font-semibold hover:bg-red-600 hover:text-white transition-all"
                     >Supprimer</button>
                   </td>

@@ -4,7 +4,10 @@ mod commands;
 mod domain;
 
 use crate::auth::login;
-use crate::commands::{create_company, create_university, get_companies, get_universities};
+use crate::commands::{
+    create_company, create_university, delete_companies, delete_universities, get_companies,
+    get_universities,
+};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -15,7 +18,9 @@ pub fn run() {
             create_company,
             login,
             get_universities,
-            get_companies
+            get_companies,
+            delete_companies,
+            delete_universities,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,7 +1,7 @@
 use crate::commands::get_base_url;
 use crate::domain::{
-    CreateCompanyResponse, CreateUniversityResponse, FetchCompaniesResponse,
-    FetchUniversitiesResponse,
+    CreateCompanyResponse, CreateUniversityResponse, DeleteCompanyResponse,
+    DeleteUniversityResponse, FetchCompaniesResponse, FetchUniversitiesResponse,
 };
 use std::collections::HashMap;
 
@@ -84,4 +84,44 @@ pub async fn fetch_companies_request(
         .json()
         .await?;
     Ok(body)
+}
+
+pub async fn delete_company_request(
+    jwt: String,
+    id: String,
+) -> Result<DeleteCompanyResponse, reqwest::Error> {
+    let mut url = get_base_url().await.unwrap();
+    url.push_str("/user/company");
+    let mut body = HashMap::new();
+    body.insert("id", id);
+    let client = reqwest::Client::new();
+    let request = client
+        .delete(url)
+        .bearer_auth(jwt)
+        .json(&body)
+        .send()
+        .await?
+        .json()
+        .await?;
+    Ok(request)
+}
+
+pub async fn delete_university_request(
+    jwt: String,
+    id: String,
+) -> Result<DeleteUniversityResponse, reqwest::Error> {
+    let mut url = get_base_url().await.unwrap();
+    url.push_str("/user/university");
+    let mut body = HashMap::new();
+    body.insert("id", id);
+    let client = reqwest::Client::new();
+    let request = client
+        .delete(url)
+        .bearer_auth(jwt)
+        .json(&body)
+        .send()
+        .await?
+        .json()
+        .await?;
+    Ok(request)
 }

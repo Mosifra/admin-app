@@ -4,8 +4,8 @@ use dotenvy::dotenv;
 
 use crate::{
     api::{
-        create_company_request, create_university_request, fetch_companies_request,
-        fetch_universities_request,
+        create_company_request, create_university_request, delete_company_request,
+        delete_university_request, fetch_companies_request, fetch_universities_request,
     },
     domain::{Company, University},
 };
@@ -60,6 +60,28 @@ pub async fn get_companies(jwt: String) -> Result<Vec<Company>, String> {
         Err(err) => {
             eprintln!("Erreur fetch_companies_request: {:?}", err);
             Err("Erreur lors du fetch des entreprises".to_string())
+        }
+    }
+}
+
+#[tauri::command]
+pub async fn delete_universities(jwt: String, id: String) -> Result<bool, String> {
+    match delete_university_request(jwt, id).await {
+        Ok(response) => Ok(response.success),
+        Err(err) => {
+            eprintln!("Erreur delete universities: {:?}", err);
+            Err("Erreur lors de la suppression des entreprises".to_string())
+        }
+    }
+}
+
+#[tauri::command]
+pub async fn delete_companies(jwt: String, id: String) -> Result<bool, String> {
+    match delete_company_request(jwt, id).await {
+        Ok(response) => Ok(response.success),
+        Err(err) => {
+            eprintln!("Erreur delete companies: {:?}", err);
+            Err("Erreur lors de la suppression des entreprises".to_string())
         }
     }
 }
