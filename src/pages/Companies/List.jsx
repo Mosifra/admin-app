@@ -54,11 +54,8 @@ export default function CompaniesList() {
                   <td className="p-4">{u.mail}</td>
                   <td className="p-4 text-right">
                     <button
-                      // api delete
-                      className="text-red-600 font-semibold"
-                    >
-                      Bouter hors
-                    </button>
+                      className="text-red-600 font-semibold hover:bg-red-600 hover:text-white transition-all"
+                    >Supprimer</button>
                   </td>
                 </tr>
               ))}
