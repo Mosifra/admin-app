@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks"
 import { useLocation } from "preact-iso"
+import { invoke } from "@tauri-apps/api/core"
 
 export default function CompaniesList() {
   const location = useLocation()
@@ -8,8 +9,10 @@ export default function CompaniesList() {
   useEffect(() => {
     const jwt = sessionStorage.getItem("jwt")
     if (!jwt) location.route("/login")
-    //api fetch
-
+    const fetchCompanies = async () => {
+      await invoke("get_companies", { jwt }).then((companies) => setCompanies(companies))
+    }
+    fetchCompanies()
   }, [])
 
   return (

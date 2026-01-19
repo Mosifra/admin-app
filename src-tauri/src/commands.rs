@@ -1,4 +1,14 @@
-use crate::api::{create_company_request, create_university_request};
+use std::env;
+
+use dotenvy::dotenv;
+
+use crate::{
+    api::{
+        create_company_request, create_university_request, fetch_companies_request,
+        fetch_universities_request,
+    },
+    domain::{Company, University},
+};
 
 #[tauri::command]
 pub async fn create_university(
@@ -12,6 +22,7 @@ pub async fn create_university(
         .map_err(|e| e.to_string())?;
     Ok(body.password)
 }
+
 #[tauri::command]
 pub async fn create_company(
     login: String,
@@ -23,4 +34,28 @@ pub async fn create_company(
         .await
         .map_err(|e| e.to_string())?;
     Ok(body.password)
+}
+
+pub async fn get_base_url() -> Result<String, String> {
+    dotenv().ok();
+    let url = env::var("API_BASEURL").map_err(|_| "Erreur en récupérant l'url de base")?;
+    Ok(url)
+}
+
+#[tauri::command]
+pub async fn get_universities(jwt: String) -> Result<Vec<University>, String> {
+    fetch_universities_request(jwt)
+        .await
+        .unwrap()
+        .universities
+        .map_err(|_| "Erreur lors du fetch des universités".to_string())
+}
+
+#[tauri::command]
+pub async fn get_companies(jwt: String) -> Result<Vec<Company>, String> {
+    fetch_companies_request(jwt)
+        .await
+        .unwrap()
+        .companies
+        .map_err(|_| "Erreur lors du fetch des universités".to_string())
 }

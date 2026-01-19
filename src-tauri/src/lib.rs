@@ -1,9 +1,10 @@
 mod api;
 mod auth;
 mod commands;
+mod domain;
 
 use crate::auth::login;
-use crate::commands::{create_company, create_university};
+use crate::commands::{create_company, create_university, get_companies, get_universities};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -12,7 +13,9 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             create_university,
             create_company,
-            login
+            login,
+            get_universities,
+            get_companies
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -9,7 +9,10 @@ export default function UniversityList() {
     const jwt = sessionStorage.getItem("jwt")
     if (!jwt) location.route("/login")
 
-    //api fetch
+    const fetchUniversities = async () => {
+      await invoke("get_universities", { jwt }).then((universities) => setUniversities(universities))
+    }
+    fetchUniversities()
   }, [])
 
   return (
