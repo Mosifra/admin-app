@@ -36,7 +36,7 @@ If you prefer not to use Nix:
 
 bun tauri dev
 
-Notes
+## Notes
 
 The shell ensures proper GTK/WebKit environment variables are set.
 
