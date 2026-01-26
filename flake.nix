@@ -10,23 +10,35 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
   in {
-    packages.${system}.default = pkgs.stdenv.mkDerivation rec {
-      pname = "mosifra-admin";
+    packages.${system}.default = pkgs.rustPlatform.buildRustPackage rec {
+      pname = "mosifra-admin-app";
       version = "0.1.0";
 
       src = ./.;
 
+      cargoHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
+      npmDeps = pkgs.fetchNpmDeps {
+        name = "${pname}-${version}-npm-deps";
+        inherit src;
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      };
+
       nativeBuildInputs = with pkgs; [
-        pkg-config
-        cargo
-        cargo-tauri
-        rustc
-        bun
+        cargo-tauri.hook
+
         nodejs
+        bun
+        pkgs.npmHooks.npmConfigHook
+
+        pkg-config
         wrapGAppsHook3
       ];
 
       buildInputs = with pkgs; [
+        glib-networking
+        openssl
+        webkitgtk_4_1
         at-spi2-atk
         cairo
         gdk-pixbuf
@@ -36,34 +48,13 @@
         librsvg
         libsoup_3
         pango
-        webkitgtk_4_1
-        openssl
-        glib-networking
       ];
 
-      buildPhase = ''
-        export HOME=$(mktemp -d)
-
-        bun install --frozen-lockfile
-        bun run build
-
-        cd src-tauri
-        cargo tauri build --bundles deb
-        cd ..
-      '';
-
-      installPhase = ''
-        mkdir -p $out/bin
-
-        cp src-tauri/target/release/${pname} $out/bin/${pname}
-
-        # Or the .deb
-        # mkdir -p $out/share
-        # cp src-tauri/target/release/bundle/deb/*.deb $out/share/
-      '';
+      cargoRoot = "src-tauri";
+      buildAndTestSubdir = cargoRoot;
 
       meta = with pkgs.lib; {
-        description = "Mosifra Admin Tauri App";
+        description = "Mosifra Admin App";
         license = licenses.mit;
         platforms = platforms.linux;
       };
