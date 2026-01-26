@@ -13,7 +13,8 @@ The flake sets up a complete development environment, including:
 - **Node.js**
 - All necessary GTK, WebKit, and system libraries for Tauri on Linux
 
-To use it, you only need **Nix** installed with the experimental features `nix-command` and `flakes` enabled.
+To use it, you only need **Nix** installed with the experimental features
+`nix-command` and `flakes` enabled.
 
 Once inside the dev shell:
 
@@ -35,6 +36,20 @@ If you prefer not to use Nix:
 4. Start the app with:
 
 bun tauri dev
+
+## Environment file
+
+To properly run the app, you'll need a .env file in the same folder as the
+executable, containing the following values
+
+- `JWT_SECRET` : The string to use to hash the jwt tokens which will be created
+  by the app.
+
+> It needs to be the same as the one used for the Mosifra API, or the app won't
+> be able to communicate with it
+
+- `ADMIN_PWD` : The password required to access the app
+- `API_BASEURL` : The root url of the api, e.g. `http://localhost:8000`
 
 ## Notes
 
