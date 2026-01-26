@@ -17,13 +17,14 @@ export default function CompaniesList() {
 
   const handleDelete = async (e, id) => {
     e.preventDefault()
-    //fix id not found
-    const jwt = sessionStorage.getItem("jwt")
-    try {
-      await invoke("delete_company", { jwt: jwt, id: id })
-      setCompanies((prev) => prev.filter((u) => u.id !== id))
-    } catch (e) {
-      console.error(e)
+    if (window.confirm(`Souhaitez-vous vraiment supprimer ce compte ?`)) {
+      const jwt = sessionStorage.getItem("jwt")
+      try {
+        await invoke("delete_company", { jwt: jwt, id: id })
+        setCompanies((prev) => prev.filter((u) => u.id !== id))
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
   return (

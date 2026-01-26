@@ -24,6 +24,7 @@ pub struct FetchCompaniesResponse {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct University {
+    pub id: String,
     pub login: String,
     pub mail: String,
     pub name: String,
@@ -31,6 +32,7 @@ pub struct University {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Company {
+    pub id: String,
     pub login: String,
     pub mail: String,
     pub name: String,

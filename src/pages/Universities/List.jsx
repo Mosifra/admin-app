@@ -17,14 +17,15 @@ export default function UniversityList() {
   }, [])
 
   const handleDelete = async (e, id) => {
-    //fix id not found
     e.preventDefault()
-    const jwt = sessionStorage.getItem("jwt")
-    try {
-      await invoke("delete_university", { jwt: jwt, id: id })
-      setUniversities((prev) => prev.filter((u) => u.id !== id))
-    } catch (e) {
-      console.error(e)
+    if (window.confirm(`Souhaitez-vous vraiment supprimer ce compte ?`)) {
+      const jwt = sessionStorage.getItem("jwt")
+      try {
+        await invoke("delete_university", { jwt: jwt, id: id })
+        setUniversities((prev) => prev.filter((u) => u.id !== id))
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 

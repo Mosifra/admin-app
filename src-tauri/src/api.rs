@@ -66,7 +66,6 @@ pub async fn fetch_universities_request(
         .await?
         .json()
         .await?;
-    println!("{body:?}");
     Ok(body)
 }
 
