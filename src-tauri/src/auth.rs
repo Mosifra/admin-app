@@ -1,6 +1,5 @@
 use std::env;
 
-use dotenvy::dotenv;
 use jsonwebtoken::{encode, EncodingKey, Header};
 use serde::{Deserialize, Serialize};
 

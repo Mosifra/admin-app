@@ -1,7 +1,5 @@
 use std::env;
 
-use dotenvy::dotenv;
-
 use crate::{
     api::{
         create_company_request, create_university_request, delete_company_request,
